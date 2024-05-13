@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const User = require('./models/User');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const app = express();
 app.use(express.json());
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -16,6 +16,13 @@ mongoose.connect(process.env.DB_URI, {
   useUnifiedTopology: true,
   authSource: 'admin'
 });
+
+// Set up session middleware
+app.use(session({
+  secret: 'your-secret-key', // Change this to a strong, random secret
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // Routes
 app.get('/', (req, res) => {
@@ -43,7 +50,9 @@ app.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
 
     if (user && await bcrypt.compare(password, user.password)) {
-      res.send('Login successful');
+      req.session.username = username;
+      req.session.isAuthenticated = true;
+      res.redirect('/');
     } else {
       res.status(401).send({ message: 'Invalid credentials' });
     }

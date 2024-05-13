@@ -1,22 +1,29 @@
-async function login(event) {
-    event.preventDefault();  // Prevent the default form submission
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-  
+async function fetchLoginStatus() {
     try {
-      const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data)
-      });
-  
-      if (response.ok) {
-        window.location = '/'; // Redirect or show success message
-      } else {
-        const result = await response.json();
-        document.getElementById('message').textContent = result.message;
-      }
+      const response = await fetch('/loginStatus'); // Send a request to the server to check login status
+      const data = await response.json();
+      return data.loggedIn;
     } catch (error) {
-      document.getElementById('message').textContent = 'An error occurred.';
+      console.error('Error fetching login status:', error);
+      return false;
     }
-  }
+}
+
+async function updateUI() {
+    const isLoggedIn = await fetchLoginStatus();
+  
+    const loginButton = document.getElementById('loginButton');
+    const loginStatus = document.getElementById('loginStatus');
+  
+    if (isLoggedIn) {
+      loginButton.textContent = 'Logout'; // Change button text to 'Logout'
+      loginButton.onclick = logout; // Set logout function as the button click event handler
+      loginStatus.textContent = 'You are logged in';
+    } else {
+      loginButton.textContent = 'Login'; // Change button text to 'Login'
+      loginButton.onclick = () => window.location = '/login'; // Redirect to login page
+      loginStatus.textContent = 'You are not logged in';
+    }
+}
+
+window.onload = updateUI;
