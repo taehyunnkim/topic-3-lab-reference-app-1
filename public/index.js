@@ -23,15 +23,15 @@ async function logout() {
   }
 
 async function updateUI() {
-    const isLoggedIn = await fetchLoginStatus();
+    const { loggedIn, username } = await fetchLoginStatus();
   
     const loginButton = document.getElementById('loginButton');
     const loginStatus = document.getElementById('loginStatus');
   
-    if (isLoggedIn) {
+    if (loggedIn) {
       loginButton.textContent = 'Logout'; // Change button text to 'Logout'
       loginButton.onclick = logout; // Set logout function as the button click event handler
-      loginStatus.textContent = 'You are logged in';
+      loginStatus.textContent = `You are logged in as ${username}`;
     } else {
       loginButton.textContent = 'Login'; // Change button text to 'Login'
       loginButton.onclick = () => window.location = '/login'; // Redirect to login page

@@ -65,4 +65,17 @@ app.post('/login', async (req, res) => {
   }
 });
 
+app.get('/loginStatus', (req, res) => {
+  if (req.session.isAuthenticated) {
+    res.json({ 
+      loggedIn: true,
+      username: req.session.username
+    });
+  } else {
+    res.json({ 
+      loggedIn: false
+    });
+  }
+});
+
 app.listen(3000, "0.0.0.0", () => console.log('Server running on http://localhost:3000'));
