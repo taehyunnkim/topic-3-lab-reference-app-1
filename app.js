@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -37,13 +37,17 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = await User.findOne({ username });
+  try {
+    const { username, password } = req.body;
+    const user = await User.findOne({ username });
 
-  if (user && await bcrypt.compare(password, user.password)) {
-    res.send('Login successful');
-  } else {
-    res.status(401).send('Invalid credentials');
+    if (user && await bcrypt.compare(password, user.password)) {
+      res.send('Login successful');
+    } else {
+      res.status(401).send({ message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    res.status(500).send({ message: 'Error logging in user' });
   }
 });
 

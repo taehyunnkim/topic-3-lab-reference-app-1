@@ -9,11 +9,13 @@
     />
     <title>Login</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="index.js"></script>
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form action="/login" method="POST">
+        <p id="message"></p>
+        <form onsubmit="login(event)">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required><br><br>
             <label for="password">Password:</label>

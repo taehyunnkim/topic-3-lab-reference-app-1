@@ -28,14 +28,7 @@ pipeline {
             steps {
                 sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}"
                 sh "docker rm -f ${env.APP_NAME} || true"
-                sh '''
-                    docker run -d -p '${env.EXPOSE_PORT}:3000' \
-                        -e MONGODB_URI="$DB_URI" \
-                        -e MONGO_INITDB_ROOT_USERNAME="$DB_USERNAME" \
-                        -e MONGO_INITDB_ROOT_PASSWORD="$DB_PASSWORD" \
-                        --name ${env.APP_NAME} \
-                        ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}
-                '''
+                sh "docker run -d -p '${env.EXPOSE_PORT}:3000' -e DB_URI=${DB_URI} --name ${env.APP_NAME} ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}"
             }
         }
     }
