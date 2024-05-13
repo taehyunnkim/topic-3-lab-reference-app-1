@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'my-node-app'
+        APP_NAME = 'fullstack-app'
         EXPOSE_PORT = 2000
     }
     
