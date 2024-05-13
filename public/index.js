@@ -9,6 +9,19 @@ async function fetchLoginStatus() {
     }
 }
 
+async function logout() {
+    try {
+      const response = await fetch('/logout'); // Send a request to the server to logout
+      if (response.ok) {
+        window.location.reload(); // Reload the page after logout
+      } else {
+        console.error('Logout failed:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  }
+
 async function updateUI() {
     const isLoggedIn = await fetchLoginStatus();
   
