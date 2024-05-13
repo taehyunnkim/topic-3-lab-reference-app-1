@@ -28,7 +28,7 @@ pipeline {
             steps {
                 sh "docker pull ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}"
                 sh "docker rm -f ${env.APP_NAME} 2> /dev/null || true"
-                sh "docker run -d -p '${env.EXPOSE_PORT}:3000' -e DB_URI=${DB_URI} --name ${env.APP_NAME} ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}"
+                sh "docker run -d -p '${env.EXPOSE_PORT}:3000' -e DB_URI=${DB_URI} --network odso-network --name ${env.APP_NAME} ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${env.APP_NAME}"
             }
         }
     }
