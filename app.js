@@ -51,4 +51,4 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.listen(2000, "0.0.0.0", () => console.log('Server running on http://localhost:2000'));
+app.listen(3000, "0.0.0.0", () => console.log('Server running on http://localhost:3000'));
