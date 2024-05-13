@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  });
+});
   
 app.get('/register', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
@@ -46,4 +47,4 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.listen(2000, "0.0.0.0", () => console.log('Server running on http://localhost:3001'));
+app.listen(2000, "0.0.0.0", () => console.log('Server running on http://localhost:2000'));
