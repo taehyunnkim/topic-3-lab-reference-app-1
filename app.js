@@ -7,11 +7,13 @@ const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const app = express();
+
+app.disable("x-powered-by");
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect("mongodb://admin:password@mongo:27017/open-devsecops", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   authSource: 'admin'
@@ -19,7 +21,7 @@ mongoose.connect(process.env.DB_URI, {
 
 // Set up session middleware
 app.use(session({
-  secret: 'your-secret-key', // Change this to a strong, random secret
+  secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true,
 }));
