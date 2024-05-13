@@ -14,6 +14,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  authSource: 'admin'
 });
 
 // Routes
