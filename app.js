@@ -78,4 +78,16 @@ app.get('/loginStatus', (req, res) => {
   }
 });
 
+app.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Error destroying session:', err);
+      res.status(500).send('Logout failed');
+    } else {
+      res.clearCookie('connect.sid');
+      res.redirect('/');
+    }
+  });
+});
+
 app.listen(3000, "0.0.0.0", () => console.log('Server running on http://localhost:3000'));
