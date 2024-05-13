@@ -2,7 +2,7 @@ async function fetchLoginStatus() {
     try {
       const response = await fetch('/loginStatus'); // Send a request to the server to check login status
       const data = await response.json();
-      return data.loggedIn;
+      return data;
     } catch (error) {
       console.error('Error fetching login status:', error);
       return false;
@@ -29,12 +29,12 @@ async function updateUI() {
     const loginStatus = document.getElementById('loginStatus');
   
     if (loggedIn) {
-      loginButton.textContent = 'Logout'; // Change button text to 'Logout'
-      loginButton.onclick = logout; // Set logout function as the button click event handler
+      loginButton.textContent = 'Logout';
+      loginButton.onclick = logout;
       loginStatus.textContent = `You are logged in as ${username}`;
     } else {
-      loginButton.textContent = 'Login'; // Change button text to 'Login'
-      loginButton.onclick = () => window.location = '/login'; // Redirect to login page
+      loginButton.textContent = 'Login';
+      loginButton.onclick = () => window.location = '/login';
       loginStatus.textContent = 'You are not logged in';
     }
 }
