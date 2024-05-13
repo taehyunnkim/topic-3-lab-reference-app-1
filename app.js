@@ -1,36 +1,38 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const User = require('./models/User');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const app = express();
 app.use(express.json());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-app.post('/signup', async (req, res) => {
-  const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  
-  const user = new User({
-    username,
-    password: hashedPassword
+// Routes
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
+  
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'register.html'));
+});
 
-  try {
-    await user.save();
-    res.status(201).send('User registered');
-  } catch (error) {
-    if (error.code === 11000) { // the code for duplicate key error
-      res.status(400).send('Username already exists.');
-    } else {
-      res.status(500).send('Error registering user.');
+app.post('/register', async (req, res) => {
+    try {
+      const { username, password } = req.body;
+      const newUser = new User({ username, password });
+      await newUser.save();
+      res.redirect('/');
+    } catch (error) {
+      res.status(500).send('Error registering new user');
     }
-  }
 });
 
 app.post('/login', async (req, res) => {
@@ -38,11 +40,10 @@ app.post('/login', async (req, res) => {
   const user = await User.findOne({ username });
 
   if (user && await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key', { expiresIn: '1h' });
-    res.json({ token });
+    res.send('Login successful');
   } else {
     res.status(401).send('Invalid credentials');
   }
 });
 
-app.listen(3001, () => console.log('Server running on http://localhost:3001'));
+app.listen(2000, "0.0.0.0", () => console.log('Server running on http://localhost:3001'));
