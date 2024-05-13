@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const User = require('./models/User');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const app = express();
