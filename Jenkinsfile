@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'node-app-4'
+        APP_NAME = 'node-app-5'
         EXPOSE_PORT = 2000
     }
     
