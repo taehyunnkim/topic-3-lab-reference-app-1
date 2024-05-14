@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'fullstack-app'
+        APP_NAME = 'node-app'
         EXPOSE_PORT = 2000
     }
     
@@ -25,7 +25,7 @@ pipeline {
                     -Dsonar.sources=. \
                     -Dsonar.exclusions=trivy-report.html \
                     -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                    -Dsonar.login=${env.SONAR_AUTH_TOKEN} \
+                    -Dsonar.token=${env.SONAR_AUTH_TOKEN} \
                     -Dsonar.qualitygate.wait=true \
                     -Dsonar.qualitygate.timeout=300"
                 }
