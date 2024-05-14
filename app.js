@@ -13,8 +13,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const uri = "mongodb://admin:password@mongo:27017/open-devsecops";
-mongoose.connect(uri, {
+mongoose.connect("mongodb://admin:password@mongo:27017/open-devsecops", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   authSource: 'admin'
