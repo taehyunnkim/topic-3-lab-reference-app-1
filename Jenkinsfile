@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'node-app-2'
+        APP_NAME = 'node-app-3'
         EXPOSE_PORT = 2000
     }
     
@@ -26,6 +26,7 @@ pipeline {
                     -Dsonar.exclusions=trivy-report.html \
                     -Dsonar.host.url=${env.SONAR_HOST_URL} \
                     -Dsonar.token=${env.SONAR_AUTH_TOKEN} \
+                    -Dsonar.profile=Secrets \
                     -Dsonar.qualitygate.wait=true \
                     -Dsonar.qualitygate.timeout=300"
                 }
