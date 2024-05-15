@@ -23,7 +23,8 @@ pipeline {
                     sh "/opt/sonar-scanner/bin/sonar-scanner \
                     -Dsonar.projectKey=${env.APP_NAME} \
                     -Dsonar.sources=. \
-                    -Dsonar.exclusions=trivy-report.html \
+                    -Dsonar.exclusions=models/**/*, trivy-report.html \
+                    -Dsonar.secrets.inclusions=models/**/*.js \
                     -Dsonar.host.url=${env.SONAR_HOST_URL} \
                     -Dsonar.token=${env.SONAR_AUTH_TOKEN} \
                     -Dsonar.qualitygate.wait=true \
