@@ -27,7 +27,8 @@ pipeline {
                     -Dsonar.host.url=${env.SONAR_HOST_URL} \
                     -Dsonar.token=${env.SONAR_AUTH_TOKEN} \
                     -Dsonar.qualitygate.wait=true \
-                    -Dsonar.qualitygate.timeout=300"
+                    -Dsonar.qualitygate.timeout=300\
+                    -X"
                 }
             }
         }
