@@ -1,24 +1,19 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const User = require('./models/User');
+const connectToDatabase = require('./models/Database.js');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 
 const app = express();
 app.disable("x-powered-by");
 
+connectToDatabase();
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-const uri = "mongodb://admin:password@mongo:27017/open-devsecops";
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  authSource: 'admin'
-});
 
 // Set up session middleware
 app.use(session({
