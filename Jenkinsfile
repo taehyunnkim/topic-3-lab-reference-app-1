@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'node-app-5'
-        EXPOSE_PORT = 2000
+        APP_NAME = 'newlab'
+        EXPOSE_PORT = 2001
     }
     
     stages {
