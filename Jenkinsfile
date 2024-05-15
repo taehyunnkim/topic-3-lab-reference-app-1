@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment { 
-        APP_NAME = 'newlab'
+        APP_NAME = 'newlab-2'
         EXPOSE_PORT = 2001
     }
     
